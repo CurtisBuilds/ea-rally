@@ -16,15 +16,21 @@ export async function middleware(request: NextRequest) {
     {
       cookies: {
         get: (name: string) => request.cookies.get(name)?.value,
-        set: (name: string, value: string, options: Record<string, unknown>) => {
-          request.cookies.set({ name, value, ...options } as Parameters<typeof request.cookies.set>[0]);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        set: (name: string, value: string, _options: Record<string, unknown>) => {
+          // @ts-ignore
+          request.cookies.set(name, value);
           response = NextResponse.next({ request });
-          response.cookies.set({ name, value, ...options } as Parameters<typeof response.cookies.set>[0]);
+          // @ts-ignore
+          response.cookies.set(name, value);
         },
-        remove: (name: string, options: Record<string, unknown>) => {
-          request.cookies.set({ name, value: "", ...options } as Parameters<typeof request.cookies.set>[0]);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        remove: (name: string, _options: Record<string, unknown>) => {
+          // @ts-ignore
+          request.cookies.delete(name);
           response = NextResponse.next({ request });
-          response.cookies.set({ name, value: "", ...options } as Parameters<typeof response.cookies.set>[0]);
+          // @ts-ignore
+          response.cookies.delete(name);
         },
       },
     }
