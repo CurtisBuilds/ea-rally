@@ -110,7 +110,10 @@ export default function LevelPage({ params }: { params: { level: string } }) {
                       color: TYPE_COLORS[block.type],
                       border: `1px solid ${TYPE_COLORS[block.type]}30`,
                     }}>
-                      {block.time} {block.icon}
+                      {block.time}{" "}
+                      {block.icon === "🏓"
+                        ? <img src="/pickleball-emoji.jpeg" alt="pickleball" style={{ width: 12, height: 12, objectFit: "contain", verticalAlign: "middle" }} />
+                        : block.icon}
                     </span>
                   ))}
                 </div>

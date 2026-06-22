@@ -197,7 +197,10 @@ export default function SessionDetail({ session, levelNum, levelName, levelDurat
                   {/* Label + desc */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: 3 }}>
-                      <span style={{ fontSize: 16 }}>{block.icon}</span>
+                      {block.icon === "🏓"
+                        ? <img src="/pickleball-emoji.jpeg" alt="pickleball" style={{ width: 18, height: 18, objectFit: "contain" }} />
+                        : <span style={{ fontSize: 16 }}>{block.icon}</span>
+                      }
                       <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ea-navy)" }}>{block.label}</span>
                       <span style={{
                         fontSize: 10, fontFamily: "var(--font-display)", letterSpacing: "0.06em",
@@ -342,7 +345,7 @@ export default function SessionDetail({ session, levelNum, levelName, levelDurat
           <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
             {session.equipment.map((item, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", padding: "var(--space-3) var(--space-4)", background: "var(--ea-mist)", borderRadius: 6, fontSize: 14, color: "var(--ea-navy)" }}>
-                <span style={{ fontSize: 16 }}>🏓</span>
+                <img src="/pickleball-emoji.jpeg" alt="pickleball" style={{ width: 18, height: 18, objectFit: "contain" }} />
                 {item}
               </div>
             ))}
