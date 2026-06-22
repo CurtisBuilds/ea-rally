@@ -93,6 +93,13 @@ export default function AdminPanel({ coaches: initial, adminName }: { coaches: C
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
+          <a href="/coach" style={{
+            fontSize: 12, fontFamily: "var(--font-display)", letterSpacing: "0.08em",
+            color: "var(--ea-teal-900)", background: "var(--ea-sky-light)",
+            padding: "3px 10px", borderRadius: 4, textDecoration: "none", textTransform: "uppercase",
+          }}>
+            Coach View
+          </a>
           <span style={{ color: "var(--ea-sky-light)", fontSize: 14 }}>{adminName}</span>
           <button
             onClick={signOut}
