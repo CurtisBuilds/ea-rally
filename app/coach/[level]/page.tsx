@@ -67,8 +67,6 @@ export default function LevelPage({ params }: { params: { level: string } }) {
               gap: "var(--space-5)",
               transition: "box-shadow 0.15s",
             }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-sm)"}
-            onMouseLeave={e => (e.currentTarget as HTMLElement).style.boxShadow = ""}
             >
               {/* Session number */}
               <span style={{
