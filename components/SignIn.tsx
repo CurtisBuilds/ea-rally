@@ -18,12 +18,11 @@ export default function SignIn() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
         shouldCreateUser: true, // Auth account created on first OTP — Coach table controls actual access
       },
     });
     setPending(false);
-    if (error) { setError("No account found for this email. Contact your admin."); return; }
+    if (error) { setError(error.message || "Could not send code. Try again."); return; }
     setStep("code");
     // 30-second resend cooldown
     setCooldown(true);
