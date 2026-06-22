@@ -22,13 +22,13 @@ export async function POST(req: NextRequest) {
   const admin = await requireAdmin();
   if (!admin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { email, firstName, lastName } = await req.json();
+  const { email, firstName, lastName, role } = await req.json();
   if (!email) return NextResponse.json({ error: "Email is required" }, { status: 400 });
 
   const exists = await coachExistsByEmail(email);
   if (exists) return NextResponse.json({ error: "Coach already exists" }, { status: 409 });
 
-  const coach = await createCoach({ email, firstName, lastName });
+  const coach = await createCoach({ email, firstName, lastName, role: role === "admin" ? "admin" : "coach" });
 
   const adminClient = createSupabaseAdminClient();
   const { error } = await adminClient.auth.admin.inviteUserByEmail(email, {

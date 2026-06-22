@@ -37,19 +37,23 @@ export async function findAllCoaches(): Promise<Coach[]> {
   const { data } = await adminClient()
     .from("Coach")
     .select("*")
-    .eq("role", "coach")
     .order("createdAt", { ascending: false });
   return data ?? [];
+}
+
+export async function updateCoachRole(id: string, role: string): Promise<void> {
+  await adminClient().from("Coach").update({ role }).eq("id", id);
 }
 
 export async function createCoach(params: {
   email: string;
   firstName?: string;
   lastName?: string;
+  role?: string;
 }): Promise<Coach | null> {
   const { data } = await adminClient()
     .from("Coach")
-    .insert({ email: params.email, firstName: params.firstName ?? null, lastName: params.lastName ?? null, role: "coach", status: "invited" })
+    .insert({ email: params.email, firstName: params.firstName ?? null, lastName: params.lastName ?? null, role: params.role ?? "coach", status: "invited" })
     .select()
     .single();
   return data ?? null;

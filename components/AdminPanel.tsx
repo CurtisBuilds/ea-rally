@@ -7,6 +7,7 @@ type Coach = {
   email: string;
   firstName: string | null;
   lastName: string | null;
+  role: string;
   status: string;
   createdAt: string;
 };
@@ -14,10 +15,11 @@ type Coach = {
 export default function AdminPanel({ coaches: initial, adminName }: { coaches: Coach[]; adminName: string }) {
   const supabase = createSupabaseBrowserClient();
   const [coaches, setCoaches] = useState<Coach[]>(initial);
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "" });
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", role: "coach" });
   const [submitting, setSubmitting] = useState(false);
   const [notice, setNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
   const [removing, setRemoving] = useState<string | null>(null);
+  const [promoting, setPromoting] = useState<string | null>(null);
 
   async function inviteCoach(e: React.FormEvent) {
     e.preventDefault();
@@ -25,14 +27,30 @@ export default function AdminPanel({ coaches: initial, adminName }: { coaches: C
     const res = await fetch("/api/admin/coaches", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form }),
     });
     const data = await res.json();
     setSubmitting(false);
     if (!res.ok) { setNotice({ type: "error", msg: data.error || "Something went wrong." }); return; }
     setCoaches((prev) => [data.coach, ...prev]);
-    setForm({ firstName: "", lastName: "", email: "" });
+    setForm({ firstName: "", lastName: "", email: "", role: "coach" });
     setNotice({ type: "success", msg: `Invite sent to ${form.email}.${data.warning ? " " + data.warning : ""}` });
+  }
+
+  async function toggleRole(id: string, currentRole: string, name: string) {
+    const newRole = currentRole === "admin" ? "coach" : "admin";
+    if (!confirm(`${newRole === "admin" ? "Promote" : "Demote"} ${name} to ${newRole}?`)) return;
+    setPromoting(id);
+    const res = await fetch(`/api/admin/coaches/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role: newRole }),
+    });
+    if (res.ok) {
+      setCoaches((prev) => prev.map((c) => c.id === id ? { ...c, role: newRole } : c));
+      setNotice({ type: "success", msg: `${name} is now ${newRole === "admin" ? "an admin" : "a coach"}.` });
+    }
+    setPromoting(null);
   }
 
   async function removeCoach(id: string, name: string) {
@@ -129,7 +147,7 @@ export default function AdminPanel({ coaches: initial, adminName }: { coaches: C
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "var(--ea-mist)" }}>
-                  {["Name", "Email", "Status", "Added", ""].map((h) => (
+                  {["Name", "Email", "Role", "Status", "Added", ""].map((h) => (
                     <th key={h} style={{ padding: "var(--space-3) var(--space-5)", textAlign: "left", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--ea-slate)", textTransform: "uppercase", letterSpacing: "0.06em", borderBottom: "1px solid var(--border-card)" }}>{h}</th>
                   ))}
                 </tr>
@@ -148,6 +166,18 @@ export default function AdminPanel({ coaches: initial, adminName }: { coaches: C
                         <span style={{
                           display: "inline-flex", alignItems: "center", gap: 6,
                           padding: "4px 12px", borderRadius: "var(--radius-badge)",
+                          background: c.role === "admin" ? "#E3F2FD" : "var(--ea-mist)",
+                          color: c.role === "admin" ? "#1565C0" : "var(--ea-slate)",
+                          fontSize: 13, fontWeight: "var(--fw-semibold)",
+                          textTransform: "capitalize",
+                        }}>
+                          {c.role}
+                        </span>
+                      </td>
+                      <td style={{ padding: "var(--space-4) var(--space-5)" }}>
+                        <span style={{
+                          display: "inline-flex", alignItems: "center", gap: 6,
+                          padding: "4px 12px", borderRadius: "var(--radius-badge)",
                           background: isActive ? "var(--ea-success-bg)" : "var(--ea-warning-bg)",
                           color: isActive ? "var(--ea-success)" : "var(--ea-warning)",
                           fontSize: 13, fontWeight: "var(--fw-semibold)",
@@ -160,13 +190,22 @@ export default function AdminPanel({ coaches: initial, adminName }: { coaches: C
                         {new Date(c.createdAt).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })}
                       </td>
                       <td style={{ padding: "var(--space-4) var(--space-5)", textAlign: "right" }}>
-                        <button
-                          onClick={() => removeCoach(c.id, name)}
-                          disabled={removing === c.id}
-                          style={{ background: "none", border: "1px solid var(--border-card)", borderRadius: "var(--radius-button)", padding: "6px 14px", fontSize: 13, color: "var(--ea-danger)", cursor: "pointer", fontFamily: "var(--font-body)", opacity: removing === c.id ? 0.5 : 1 }}
-                        >
-                          {removing === c.id ? "Removing…" : "Remove"}
-                        </button>
+                        <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end" }}>
+                          <button
+                            onClick={() => toggleRole(c.id, c.role, name)}
+                            disabled={promoting === c.id}
+                            style={{ background: "none", border: "1px solid var(--border-card)", borderRadius: "var(--radius-button)", padding: "6px 14px", fontSize: 13, color: c.role === "admin" ? "var(--ea-slate)" : "#1565C0", cursor: "pointer", fontFamily: "var(--font-body)", opacity: promoting === c.id ? 0.5 : 1 }}
+                          >
+                            {promoting === c.id ? "…" : c.role === "admin" ? "Make Coach" : "Make Admin"}
+                          </button>
+                          <button
+                            onClick={() => removeCoach(c.id, name)}
+                            disabled={removing === c.id}
+                            style={{ background: "none", border: "1px solid var(--border-card)", borderRadius: "var(--radius-button)", padding: "6px 14px", fontSize: 13, color: "var(--ea-danger)", cursor: "pointer", fontFamily: "var(--font-body)", opacity: removing === c.id ? 0.5 : 1 }}
+                          >
+                            {removing === c.id ? "Removing…" : "Remove"}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -179,10 +218,10 @@ export default function AdminPanel({ coaches: initial, adminName }: { coaches: C
         {/* Invite form */}
         <section style={{ background: "var(--ea-white)", borderRadius: "var(--radius-card)", boxShadow: "var(--shadow-card)", border: "1px solid var(--border-card)", overflow: "hidden" }}>
           <div style={{ padding: "var(--space-5) var(--space-6)", borderBottom: "1px solid var(--border-card)" }}>
-            <h2 style={{ fontSize: 18, fontFamily: "var(--font-display)", color: "var(--ea-navy)" }}>Invite a Coach</h2>
-            <p style={{ color: "var(--ea-slate)", fontSize: 14, marginTop: "var(--space-2)" }}>They&apos;ll receive an email with a sign-in link.</p>
+            <h2 style={{ fontSize: 18, fontFamily: "var(--font-display)", color: "var(--ea-navy)" }}>Invite a User</h2>
+            <p style={{ color: "var(--ea-slate)", fontSize: 14, marginTop: "var(--space-2)" }}>They&apos;ll receive an email with a sign-in code.</p>
           </div>
-          <form onSubmit={inviteCoach} style={{ padding: "var(--space-6)", display: "grid", gridTemplateColumns: "1fr 1fr 2fr auto", gap: "var(--space-4)", alignItems: "end" }}>
+          <form onSubmit={inviteCoach} style={{ padding: "var(--space-6)", display: "grid", gridTemplateColumns: "1fr 1fr 2fr 1fr auto", gap: "var(--space-4)", alignItems: "end" }}>
             {[
               { label: "First Name", key: "firstName", placeholder: "Jane", type: "text", required: false },
               { label: "Last Name", key: "lastName", placeholder: "Smith", type: "text", required: false },
@@ -202,6 +241,17 @@ export default function AdminPanel({ coaches: initial, adminName }: { coaches: C
                 />
               </div>
             ))}
+            <div>
+              <label style={{ display: "block", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--ea-slate)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "var(--space-2)" }}>Role</label>
+              <select
+                value={form.role}
+                onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+                style={{ width: "100%", padding: "12px 14px", fontFamily: "var(--font-body)", fontSize: 15, color: "var(--text-body)", border: "1px solid var(--border-card)", borderRadius: "var(--radius-input)", outline: "none", background: "var(--ea-white)" }}
+              >
+                <option value="coach">Coach</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
             <button
               type="submit"
               disabled={submitting || !form.email}
