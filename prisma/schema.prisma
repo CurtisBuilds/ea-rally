@@ -1,0 +1,20 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Coach {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  role      String   @default("coach") // "admin" | "coach"
+  status    String   @default("invited") // "invited" | "active" | "removed"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

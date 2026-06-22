@@ -1,0 +1,13 @@
+{
+  "name": "EA Rally",
+  "short_name": "EA Rally",
+  "description": "Elevation Athletics — Pickleball Coach Curriculum",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#004356",
+  "theme_color": "#004356",
+  "icons": [
+    { "src": "/pickleball.jpeg", "sizes": "192x192", "type": "image/jpeg" },
+    { "src": "/pickleball.jpeg", "sizes": "512x512", "type": "image/jpeg" }
+  ]
+}

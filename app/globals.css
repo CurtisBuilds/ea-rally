@@ -1,0 +1,120 @@
+/* EA Brand Fonts */
+@font-face {
+  font-family: "BBH Bogle";
+  src: url("/fonts/BBHBogle-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inclusive Sans";
+  src: url("/fonts/InclusiveSans.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inclusive Sans";
+  src: url("/fonts/InclusiveSans-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* EA Color Tokens */
+:root {
+  --ea-sky: #46AFE3;
+  --ea-sky-light: #9FE0FF;
+  --ea-sky-soft: #D0F5FF;
+  --ea-blue: #0092DB;
+  --ea-link: #007ABA;
+  --ea-teal-700: #006F8D;
+  --ea-teal-800: #005F79;
+  --ea-teal-900: #004356;
+  --ea-navy: #10414F;
+  --ea-ink: #1E526E;
+  --ea-peach: #FFBB91;
+  --ea-orange-dark: #D36D36;
+  --ea-white: #FFFFFF;
+  --ea-mist: #F2F2F2;
+  --ea-line: #E5E5E5;
+  --ea-muted: #787878;
+  --ea-slate: #47636B;
+  --ea-success: #2FA36B;
+  --ea-success-bg: #E3F6EC;
+  --ea-warning: #D9912A;
+  --ea-warning-bg: #FCF1DD;
+  --ea-danger: #D6603B;
+  --ea-danger-bg: #FBE9E2;
+  --ea-neutral: #9AA6AB;
+  --ea-neutral-bg: #F2F2F2;
+
+  --text-display: var(--ea-navy);
+  --text-heading: var(--ea-navy);
+  --text-body: var(--ea-ink);
+  --text-muted: var(--ea-slate);
+  --text-link: var(--ea-link);
+  --text-on-dark: var(--ea-white);
+  --surface-page: var(--ea-white);
+  --surface-card: var(--ea-white);
+  --action-primary: var(--ea-blue);
+  --action-primary-hover: #007BC0;
+  --action-on-primary: var(--ea-white);
+  --border-card: var(--ea-line);
+
+  --font-display: "BBH Bogle", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Inclusive Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fs-body: 16px;
+  --fs-label: 14px;
+  --lh-display: 1.0;
+  --lh-body: 1.5;
+  --ls-display: 0.02em;
+  --ls-body: -0.02em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --radius-button: 8px;
+  --radius-input: 6px;
+  --radius-badge: 4px;
+  --radius-card: 8px;
+  --shadow-card: 0 1px 4px rgba(16,65,79,0.06);
+  --shadow-card-hover: 0 4px 16px rgba(16,65,79,0.10);
+  --nav-height: 64px;
+  --container-max: 1100px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--text-body);
+  background: var(--ea-mist);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-regular);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
+  color: var(--text-heading);
+  margin: 0;
+}
+p { margin: 0; }
+a { color: var(--text-link); text-decoration: none; font-weight: var(--fw-semibold); }
+a:hover { text-decoration: underline; }
+img, svg { display: block; max-width: 100%; }
+button { font-family: var(--font-body); cursor: pointer; }
+input, select, textarea { font-family: var(--font-body); }
