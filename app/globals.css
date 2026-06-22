@@ -118,3 +118,11 @@ a:hover { text-decoration: underline; }
 img, svg { display: block; max-width: 100%; }
 button { font-family: var(--font-body); cursor: pointer; }
 input, select, textarea { font-family: var(--font-body); }
+
+/* CoachNav responsive */
+.coach-nav-name { display: inline; }
+.coach-nav-brand-text { display: inline; }
+@media (max-width: 520px) {
+  .coach-nav-name { display: none; }
+  .coach-nav-brand-text { display: none; }
+}

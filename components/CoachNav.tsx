@@ -45,7 +45,7 @@ export default function CoachNav({ name, isAdmin }: { name: string; isAdmin: boo
       <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", minWidth: 0 }}>
         <Link href="/coach" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", textDecoration: "none", flexShrink: 0 }}>
           <img src="/pickleball.jpeg" alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--ea-white)", textTransform: "uppercase", letterSpacing: "var(--ls-display)" }}>
+          <span className="coach-nav-brand-text" style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--ea-white)", textTransform: "uppercase", letterSpacing: "var(--ls-display)" }}>
             EA Rally
           </span>
         </Link>
@@ -76,7 +76,7 @@ export default function CoachNav({ name, isAdmin }: { name: string; isAdmin: boo
             Admin
           </Link>
         )}
-        <span style={{ color: "var(--ea-sky-light)", fontSize: 14 }}>{name}</span>
+        <span className="coach-nav-name" style={{ color: "var(--ea-sky-light)", fontSize: 14 }}>{name}</span>
         <button onClick={handleSignOut} style={{
           fontSize: 13, color: "var(--ea-white)", background: "transparent",
           border: "1px solid rgba(255,255,255,0.3)", borderRadius: 6,
