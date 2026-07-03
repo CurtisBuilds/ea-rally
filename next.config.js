@@ -1,25 +1,16 @@
 /** @type {import('next').NextConfig} */
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
-  cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
+  cacheOnFrontEndNav: false,
+  aggressiveFrontEndNavCaching: false,
   reloadOnOnline: true,
   disable: process.env.NODE_ENV === "development",
   workboxOptions: {
     disableDevLogs: true,
+    // NEVER cache HTML pages — auth state must always be checked fresh from server.
+    // Only cache static assets (JS bundles, CSS, fonts, images).
     runtimeCaching: [
-      // Cache all coach curriculum pages — NetworkFirst so coaches always get
-      // the latest content when online, but fall back to cache when offline.
-      {
-        urlPattern: /^https:\/\/.*\/coach(\/.*)?$/,
-        handler: "NetworkFirst",
-        options: {
-          cacheName: "coach-pages",
-          expiration: { maxEntries: 200, maxAgeSeconds: 7 * 24 * 60 * 60 },
-          networkTimeoutSeconds: 10,
-        },
-      },
-      // Cache static assets (JS, CSS, fonts, images) forever — they're hashed.
+      // Next.js hashed JS/CSS chunks — safe to cache forever
       {
         urlPattern: /\/_next\/static\/.*/,
         handler: "CacheFirst",
@@ -28,7 +19,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
           expiration: { maxEntries: 500, maxAgeSeconds: 365 * 24 * 60 * 60 },
         },
       },
-      // Cache images & fonts from public/
+      // Public assets: fonts, images
       {
         urlPattern: /\.(png|jpeg|jpg|svg|ttf|woff2)$/,
         handler: "CacheFirst",
