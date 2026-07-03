@@ -5,8 +5,8 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Always allow auth callback through
-  if (pathname.startsWith("/auth")) return NextResponse.next();
+  // Always allow auth callback and access-denied through
+  if (pathname.startsWith("/auth") || pathname.startsWith("/access-denied")) return NextResponse.next();
 
   let response = NextResponse.next({ request });
 

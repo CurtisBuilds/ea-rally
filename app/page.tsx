@@ -10,7 +10,7 @@ export default async function RootPage() {
 
   const coach = await findCoachByEmail(user.email!);
 
-  if (!coach || coach.status === "removed") redirect("/sign-in");
+  if (!coach || coach.status === "removed") redirect("/access-denied");
   if (coach.role === "admin") redirect("/admin");
   redirect("/coach");
 }

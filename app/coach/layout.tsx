@@ -9,7 +9,7 @@ export default async function CoachLayout({ children }: { children: React.ReactN
   if (!user) redirect("/sign-in");
 
   const coach = await findCoachByEmail(user.email!);
-  if (!coach || coach.status === "removed") redirect("/sign-in");
+  if (!coach || coach.status === "removed") redirect("/access-denied");
 
   const name = [coach.firstName, coach.lastName].filter(Boolean).join(" ") || coach.email;
 
