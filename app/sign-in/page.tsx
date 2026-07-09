@@ -13,7 +13,7 @@ export default function SignInPage() {
       <div style={{ width: "100%", maxWidth: 420 }}>
         {/* Logo block */}
         <div style={{ textAlign: "center", marginBottom: "var(--space-7)" }}>
-          <img src="/pball-logo.svg" alt="Elevation Athletics" style={{ height: 90, width: "auto", marginBottom: "var(--space-2)" }} />
+          <img src="/pball-logo.svg" alt="Elevation Athletics" style={{ height: 90, width: "auto", marginBottom: "var(--space-2)", display: "block", margin: "0 auto var(--space-2)" }} />
           <p style={{ color: "var(--ea-teal-700)", marginTop: "var(--space-2)", fontSize: 15 }}>
             Coach curriculum — sign in to continue
           </p>
