@@ -44,7 +44,7 @@ export default function CoachNav({ name, isAdmin }: { name: string; isAdmin: boo
       {/* Left: Logo + breadcrumb */}
       <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", minWidth: 0 }}>
         <Link href="/coach" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", textDecoration: "none", flexShrink: 0 }}>
-          <img src="/bball-logo.svg" alt="Elevation Athletics" style={{ height: 36, width: "auto" }} />
+          <img src="/pball-logo.svg" alt="Elevation Athletics" style={{ height: 36, width: "auto" }} />
         </Link>
         {levelNum && (
           <>
