@@ -30,7 +30,7 @@ export default function CoachNav({ name, isAdmin }: { name: string; isAdmin: boo
 
   return (
     <header style={{
-      background: "var(--ea-teal-900)",
+      background: "var(--ea-sky-soft)",
       height: "var(--nav-height)",
       display: "flex",
       alignItems: "center",
@@ -44,23 +44,20 @@ export default function CoachNav({ name, isAdmin }: { name: string; isAdmin: boo
       {/* Left: Logo + breadcrumb */}
       <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", minWidth: 0 }}>
         <Link href="/coach" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", textDecoration: "none", flexShrink: 0 }}>
-          <img src="/pickleball.jpeg" alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
-          <span className="coach-nav-brand-text" style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--ea-white)", textTransform: "uppercase", letterSpacing: "var(--ls-display)" }}>
-            EA Rally
-          </span>
+          <img src="/bball-logo.svg" alt="Elevation Athletics" style={{ height: 36, width: "auto" }} />
         </Link>
         {levelNum && (
           <>
-            <span style={{ color: "var(--ea-teal-400)", fontSize: 14 }}>›</span>
-            <Link href={`/coach/${levelNum}`} style={{ color: "var(--ea-sky-light)", fontSize: 14, textDecoration: "none" }}>
+            <span style={{ color: "var(--ea-teal-700)", fontSize: 14 }}>›</span>
+            <Link href={`/coach/${levelNum}`} style={{ color: "var(--ea-teal-700)", fontSize: 14, textDecoration: "none" }}>
               Level {levelNum}
             </Link>
           </>
         )}
         {sessionNum && (
           <>
-            <span style={{ color: "var(--ea-teal-400)", fontSize: 14 }}>›</span>
-            <span style={{ color: "var(--ea-white)", fontSize: 14 }}>Session {sessionNum}</span>
+            <span style={{ color: "var(--ea-teal-700)", fontSize: 14 }}>›</span>
+            <span style={{ color: "var(--ea-ink)", fontSize: 14 }}>Session {sessionNum}</span>
           </>
         )}
       </div>
@@ -70,16 +67,16 @@ export default function CoachNav({ name, isAdmin }: { name: string; isAdmin: boo
         {isAdmin && (
           <Link href="/admin" style={{
             fontSize: 12, fontFamily: "var(--font-display)", letterSpacing: "0.08em",
-            color: "var(--ea-teal-900)", background: "var(--ea-sky-light)",
+            color: "var(--ea-white)", background: "var(--ea-teal-800)",
             padding: "3px 10px", borderRadius: 4, textDecoration: "none", textTransform: "uppercase",
           }}>
             Admin
           </Link>
         )}
-        <span className="coach-nav-name" style={{ color: "var(--ea-sky-light)", fontSize: 14 }}>{name}</span>
+        <span className="coach-nav-name" style={{ color: "var(--ea-ink)", fontSize: 14 }}>{name}</span>
         <button onClick={handleSignOut} style={{
-          fontSize: 13, color: "var(--ea-white)", background: "transparent",
-          border: "1px solid rgba(255,255,255,0.3)", borderRadius: 6,
+          fontSize: 13, color: "var(--ea-teal-800)", background: "transparent",
+          border: "1px solid var(--ea-teal-800)", borderRadius: 6,
           padding: "4px 12px", cursor: "pointer",
         }}>
           Sign out

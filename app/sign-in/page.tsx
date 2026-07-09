@@ -7,28 +7,14 @@ export default function SignInPage() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      background: "var(--ea-teal-900)",
+      background: "var(--ea-sky-soft)",
       padding: "var(--space-5)",
     }}>
       <div style={{ width: "100%", maxWidth: 420 }}>
         {/* Logo block */}
         <div style={{ textAlign: "center", marginBottom: "var(--space-7)" }}>
-          <img
-            src="/pickleball.jpeg"
-            alt="Pickleball"
-            style={{ width: 64, height: 64, borderRadius: "50%", objectFit: "cover", margin: "0 auto var(--space-4)" }}
-          />
-          <h1 style={{
-            fontFamily: "var(--font-display)",
-            fontSize: 36,
-            color: "var(--ea-white)",
-            textTransform: "uppercase",
-            letterSpacing: "var(--ls-display)",
-            lineHeight: 1,
-          }}>
-            EA Rally
-          </h1>
-          <p style={{ color: "var(--ea-sky-light)", marginTop: "var(--space-2)", fontSize: 15 }}>
+          <img src="/bball-logo.svg" alt="Elevation Athletics" style={{ height: 90, width: "auto", marginBottom: "var(--space-2)" }} />
+          <p style={{ color: "var(--ea-teal-700)", marginTop: "var(--space-2)", fontSize: 15 }}>
             Coach curriculum — sign in to continue
           </p>
         </div>
